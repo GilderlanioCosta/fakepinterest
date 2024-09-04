@@ -1,0 +1,36 @@
+{% extends 'index.html' %}
+{% include "navbar.html" %}
+{% block title %}
+    Perfil {{usuario.username}}
+{% endblock %}
+{% block body%}
+
+<body>
+    
+    <h1>Perfil {{usuario.username}}</h1>
+    {% if form %}
+    <form method="POST" style="text-align: center; display: flex; align-items: center; justify-content: center; gap: 20px;" class="formPerfilUpload" enctype="multipart/form-data">
+        {{ form.csrf_token }}
+
+            {{ form.foto() }}
+        
+        
+           
+        <div class="div-botao" style="max-width: 90px;">
+            {{ form.confir_foto(class="botao-login") }} 
+        </div>
+    </form>
+    {% endif%}
+    <div class="container">
+        <div class="conteudo">
+            {% for foto in usuario.fotos %}
+            <a href="{{ url_for('perfil', id_usuario= foto.id_usuario) }}">
+                <div class="bloco-imagem">
+                    <img src="{{ url_for('static', filename='posts/{}'.format(foto.image)) }}">
+                </div>
+            </a>
+            {% endfor%}
+        </div>
+    </div>
+</body>
+{% endblock %}
